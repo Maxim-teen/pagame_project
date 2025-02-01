@@ -473,24 +473,25 @@ def startGame(score_signal, username):
                     done = True
 
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                         Pacman.changespeed(-30, 0)
-                    if event.key == pygame.K_RIGHT:
+                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                         Pacman.changespeed(30, 0)
-                    if event.key == pygame.K_UP:
+                    if event.key == pygame.K_UP or event.key == pygame.K_w:
                         Pacman.changespeed(0, -30)
-                    if event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         Pacman.changespeed(0, 30)
 
                 if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                         Pacman.changespeed(30, 0)
-                    if event.key == pygame.K_RIGHT:
+                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                         Pacman.changespeed(-30, 0)
-                    if event.key == pygame.K_UP:
+                    if event.key == pygame.K_UP or event.key == pygame.K_w:
                         Pacman.changespeed(0, 30)
-                    if event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         Pacman.changespeed(0, -30)
+
                     # Пример обновления очков
                     if len(blocks_hit_list) > 0:
                         score += len(blocks_hit_list)
@@ -592,16 +593,16 @@ def startGame(score_signal, username):
 def update_user_score(username, new_score):
     try:
         rows = []
-        with open(WALLET_FILE, 'r') as file_1:
-            for line in file_1:
+        with open(WALLET_FILE, 'r') as file:
+            for line in file:
                 if line.startswith(username + ":"):
                     user_data = line.strip().split(":")
                     user_data[3] = str(new_score)
                     line = ":".join(user_data) + "\n"
                 rows.append(line)
 
-        with open(WALLET_FILE, 'w') as file_1:
-            file_1.writelines(rows)
+        with open(WALLET_FILE, 'w') as file:
+            file.writelines(rows)
     except Exception as e:
         pass
 
